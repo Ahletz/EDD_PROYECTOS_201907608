@@ -31,7 +31,7 @@ module Menu
 
     end subroutine Menu1
 
-    subroutine DatosEstudiante()
+    subroutine DatosEstudiante() !SUBRUTINA QUE MUESTRA LOS DATOS DEL ESTUDIANTE
         print *, '||---------------------------------------------||'
         print *, '|| NOMBRE: LUDWING ALEXANDER LOPEZ ORTIZ       ||'
         print *, '|| CARNET: 201907608                           ||'
@@ -41,11 +41,13 @@ module Menu
 
     end subroutine DatosEstudiante
 
-    subroutine Seleccion(x)
+    subroutine Seleccion(x) !SUBRUTINA DE CASOS SEGUN LA SELECCION INGRESADA
 
         implicit none
         
         integer, intent (in) :: x
+
+        !OPCIONES DEPENDIENDO EL CASO SELECCIONADO 
 
         if ( x == 1 ) then
             
@@ -64,7 +66,7 @@ module Menu
         end if
 
         if ( x == 5 ) then
-            call DatosEstudiante()
+            call DatosEstudiante() !LLAMADA ACCIONES PARA MOSTRAR DATOS DEL ESTUDIANTE
         end if
 
 
