@@ -6,5 +6,5 @@ program Main
     ! mensaje "hola mundo" fortran 
     ! print *, 'Hola Mundo!'
 
-    call Mensaje()
+    call Menu1()
   end program Main
