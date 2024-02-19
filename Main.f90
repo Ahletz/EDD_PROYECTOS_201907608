@@ -4,7 +4,7 @@ program Main
     implicit none
 
     ! mensaje "hola mundo" fortran 
-    print *, 'Hola Mundo!'
+    ! print *, 'Hola Mundo!'
 
     call Mensaje()
   end program Main
