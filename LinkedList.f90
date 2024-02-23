@@ -72,6 +72,47 @@ module ListaSimple
 
     end subroutine Show
 
+    subroutine Graficar(NombreArchivo)
+
+        character (len=30) :: NombreArchivo
+        integer :: unit 
+        integer :: contador 
+
+        type (Nodo), pointer :: now !nodo actual
+
+        now => head !apnta a la cabeza de la lista
+
+        !Abrir archivo DOT
+        open(unit, file=NombreArchivo, status='replace')
+        write(unit, *) 'digraph Lista {'
+        write(unit, *) '    node [shape=box, color=red];'
+
+        !comenamos a agregar 
+
+        contador = 0 !contador de nodos 
+        do while(associated(now))
+
+            contador = contador +1 !aumentamos el contador para los nodos 
+
+            write(*,*) '    "Node', contador, '" [label= Numero Ventanilla: "', now%ventanilla, '"];' !escribimos el valor del nodo y el nodo con sus propiedades
+
+            if (associated(now%next)) then !i hay n nodo siguiente 
+
+                write(unit, *) '    "Node', contador, '" -> "Node', contador+1, '";'
+            end if 
+            now = now%next
+        end do
+
+        ! Cerrar el archivo DOT
+        write(unit, *) '}'
+        close(unit)
+    
+        ! Generar el archivo PNG utilizando Graphviz
+        call system('dot -Tpng ' // trim(NombreArchivo) // ' -o ' // trim(adjustl(NombreArchivo)) // '.png')
+    
+        print *, 'Graphviz file generated: ', trim(adjustl(NombreArchivo)) // '.png'
+
+    end subroutine Graficar
 
 
 end module ListaSimple
