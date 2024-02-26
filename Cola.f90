@@ -34,13 +34,12 @@ module Cola_recepcion
 
     ! AGREGAR UN ELEMENTO A LA COLA
 
-    subroutine Add(this, id, nombre, imgG, imgM, imgP)
+    subroutine Add(this, id, nombre, imgG, imgP)
 
         class(Cola), intent(inout) :: this !indicar this cola
         !variables de entrada
         integer, intent(in):: id
         integer, intent(in):: imgG
-        integer, intent(in):: imgM
         integer, intent(in):: imgP
         character(len=*) :: nombre
     
@@ -52,7 +51,6 @@ module Cola_recepcion
         now%id = id
         now%nombre = nombre
         now%imgG = imgG
-        now%imgM = imgM
         now%imgP = imgP 
     
         !agregar el nodo a la cola
@@ -104,6 +102,8 @@ module Cola_recepcion
 
         class(Cola), intent(inout) :: this !indicar this cola
         type(Nodo), pointer :: now 
+
+        now => this%head !apuntador actual a cabeza de la cola
 
         print *, 'contenido de la cola'
         

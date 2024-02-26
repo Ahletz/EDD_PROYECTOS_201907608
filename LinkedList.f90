@@ -47,7 +47,6 @@ module ListaSimple
         else 
 
             !si la lista contiene un valor, entonces
-
             now%next => NewNodo !el sigueinte se vuelve el nuevo nodo 
             now => NewNodo !el actual es el nuevo nodo 
 
