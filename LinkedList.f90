@@ -2,12 +2,15 @@ module ListaSimple
 
     implicit none
 
+    integer :: io
+
+
     !estructura del nodo
 
     type Nodo 
 
-    integer :: ventanilla ! entero que guarda el nmero de ventanillas 
-
+    integer :: ventanilla ! entero que guarda el numero de ventanillas 
+    
     type(Nodo), pointer :: next => null()
 
     end type Nodo
@@ -17,6 +20,8 @@ module ListaSimple
 
     type(Nodo), pointer :: head => null() !apntador nodo cabeza
     type(Nodo), pointer :: now => null() !apuntador nodo actual 
+
+    
 
     contains
 
@@ -29,7 +34,7 @@ module ListaSimple
 
         !crear nuevo nodo 
 
-        allocate(NewNodo)
+        allocate(NewNodo) !decirle que apunte a un nodo lista
         NewNodo%ventanilla = window !asignar valor de la ventanillas
         NewNodo%next => null() !apntar al sigueinte nodo vacio
 
@@ -72,46 +77,57 @@ module ListaSimple
 
     end subroutine Show
 
-    subroutine Graficar(NombreArchivo)
 
-        character (len=30) :: NombreArchivo
-        integer :: unit 
-        integer :: contador 
+    subroutine Graficar()
 
-        type (Nodo), pointer :: now !nodo actual
+        type (Nodo), pointer :: now !indicar nodo 
 
-        now => head !apnta a la cabeza de la lista
+        character(len=30) :: contenido
+        character(len=5000) :: cadena !contenido del documento
+        integer :: numero !numero de nodo en entero
+        character(len=20) :: num1 !numero en string
+        character(len=20) :: num2 !numero en string
 
-        !Abrir archivo DOT
-        open(unit, file=NombreArchivo, status='replace')
-        write(unit, *) 'digraph Lista {'
-        write(unit, *) '    node [shape=box, color=red];'
+        integer :: unit
 
-        !comenamos a agregar 
+        now => head !indicar nodo apunta a cabeza de lista
+        numero = 1 !numerdacion de los nodos
 
-        contador = 0 !contador de nodos 
+        ! Abrir el archivo DOT
+        open(unit, file='Grafica1.dot', status='replace')
+        write(unit, *) 'digraph ListaSimple {'
+
+         write(unit,*) 'node [shape=box, style="rounded,filled", fillcolor="lightblue", fontname="Arial"];'
+         write(unit,*) 'rankdir = LR;'
+
         do while(associated(now))
 
-            contador = contador +1 !aumentamos el contador para los nodos 
+            write (contenido, '(I0)')  now%ventanilla !convertir el valor entero en un string
+            write (num1, '(I0)')  numero !convertir el valor en un string
+            write (num2, '(I0)')  numero+1 !convertir el valor en un string
 
-            write(*,*) '    "Node', contador, '" [label= Numero Ventanilla: "', now%ventanilla, '"];' !escribimos el valor del nodo y el nodo con sus propiedades
+            write(*,*)'ventanilla: '//contenido
 
-            if (associated(now%next)) then !i hay n nodo siguiente 
+            write(unit,*)trim(' Nodo'//num1//' [label="Ventanilla '//contenido//'"];')
+            
 
-                write(unit, *) '    "Node', contador, '" -> "Node', contador+1, '";'
-            end if 
-            now = now%next
-        end do
+            if (associated(now%next)) then
+                write(unit, *)trim('Nodo'//num1//'-> Nodo'//num2//';')
+            end if
+
+            numero = numero + 1 !aumentar el numero del nodo al siguiente
+            now =>now%next !siugiente nodo
+
+        end do 
 
         ! Cerrar el archivo DOT
         write(unit, *) '}'
         close(unit)
-    
-        ! Generar el archivo PNG utilizando Graphviz
-        call system('dot -Tpng ' // trim(NombreArchivo) // ' -o ' // trim(adjustl(NombreArchivo)) // '.png')
-    
-        print *, 'Graphviz file generated: ', trim(adjustl(NombreArchivo)) // '.png'
 
+        ! Generar el archivo PNG utilizando Graphviz
+        call system('dot -Tpng -o Grafica1.png Grafica1.dot')
+
+ 
     end subroutine Graficar
 
 

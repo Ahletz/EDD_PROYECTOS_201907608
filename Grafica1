@@ -1,0 +1,16 @@
+ digraph ListaSimple {
+ node [shape=box, style="rounded,filled", fillcolor="lightblue", fontname="Arial"];
+ rankdir = LR;
+  Nodo1                    [label="Ventanilla 1                             "];
+ Nodo1                   -> Nodo2
+  Nodo2                    [label="Ventanilla 2                             "];
+ Nodo2                   -> Nodo3
+  Nodo3                    [label="Ventanilla 3                             "];
+ Nodo3                   -> Nodo4
+  Nodo4                    [label="Ventanilla 4                             "];
+ Nodo4                   -> Nodo5
+  Nodo5                    [label="Ventanilla 5                             "];
+ Nodo5                   -> Nodo6
+  Nodo6                    [label="Ventanilla 6                             "];
+ Nodo6                   -> Nodo7
+ }
