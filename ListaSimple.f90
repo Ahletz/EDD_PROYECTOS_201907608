@@ -1,4 +1,4 @@
-module ListaSimple
+module LIstaAtendidos
 
     implicit none
 
@@ -6,8 +6,11 @@ module ListaSimple
 
     type Nodo 
 
+    character(len = 50) :: Nombre !nombre del cliente atendido
     integer :: ventanilla ! entero que guarda el numero de ventanillas 
-    
+    integer :: Num !numero de imagenes impresas
+    integer :: steps !pasos en el sistema
+
     type(Nodo), pointer :: next => null()
 
     end type Nodo
@@ -24,15 +27,22 @@ module ListaSimple
 
     !subrutina para poder agregar un nuuevo nodo a la lista 
 
-    subroutine Add(window)
+    subroutine Add(window, name, img, steps)
 
-        integer, intent(in) :: window !definimos tipo de dato ingresado
+        !definimos tipo de dato ingresado
+        integer, intent(in) :: window 
+        character(len = 50), intent(in) :: name 
+        integer, intent(in) :: img
+        integer, intent(in) :: steps 
         type (Nodo), pointer :: NewNodo !creamos un nuevo nodo llamado NewNodo
 
         !crear nuevo nodo 
 
         allocate(NewNodo) !decirle que apunte a un nodo lista
         NewNodo%ventanilla = window !asignar valor de la ventanillas
+        NewNodo%Nombre  = name
+        NewNodo%Num  = img
+        NewNodo%steps =steps
         NewNodo%next => null() !apntar al sigueinte nodo vacio
 
 
@@ -125,5 +135,4 @@ module ListaSimple
  
     end subroutine Graficar
 
-
-end module ListaSimple
+end module LIstaAtendidos
